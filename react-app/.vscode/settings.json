@@ -1,0 +1,20 @@
+
+{
+    "cucumberautocomplete.steps": [
+        "e2e/src/step-definitions/**/**/*.ts"
+    ],
+    "cucumberautocomplete.syncfeatures": "e2e/src/features/**/*.feature",
+    "cucumberautocomplete.strictGherkinCompletion": true,
+    "cucumberautocomplete.strictGherkinValidation": true,
+    "cucumberautocomplete.smartSnippets": true,
+    "cucumberautocomplete.stepsInvariants": true,
+    "cucumberautocomplete.onTypeFormat": true,
+    "editor.quickSuggestions": {
+        "comments": false,
+        "strings": true,
+        "other": true
+    },
+    
+    "cucumberautocomplete.gherkinDefinitionPart": "(Given|When|Then|And|But)\\(",
+    //"cucumberautocomplete.stepRegExSymbol": "'"
+}
