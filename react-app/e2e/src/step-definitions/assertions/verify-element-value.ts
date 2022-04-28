@@ -1,6 +1,6 @@
 import { Then } from '@cucumber/cucumber'
 import { ElementKey } from '../../env/global';
-import {getElementLocator} from "../../support/web-element-helper";
+import { getElementLocator } from "../../support/web-element-helper";
 import { waitFor } from '../../support/wait-for-behavior';
 
 Then('the {string} should contain the text {string}',
@@ -10,13 +10,21 @@ Then('the {string} should contain the text {string}',
             globalVariables,
             globalConfig,
         } = this;
-
+        //console.log(`The ${elementKey} should contains the text ${expectedElementText}....`);
         const elementIdentifier = getElementLocator(page, elementKey, globalVariables, globalConfig)
-
-        await waitFor(async () => {
+        const executionResult = await waitFor(async () => {
             const elementText = await page.textContent(elementIdentifier)
             return elementText?.includes(expectedElementText);
         });
+        if (executionResult == false){
+            throw new Error(` 
+            Step    = The ${elementKey} should contains the text "${expectedElementText}".
+            Page    = ${globalVariables.currentScreen.toUpperCase()}.
+            Element = "${elementIdentifier}".
+            Expeccted Text = "${expectedElementText}".
+            Actual Text    = "${await page.textContent(elementIdentifier)}".`
+            )
+        }
 
     }
 )

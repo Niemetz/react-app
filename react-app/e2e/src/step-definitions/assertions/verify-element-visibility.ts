@@ -5,20 +5,25 @@ import { getElementLocator } from '../../support/web-element-helper';
 import { waitFor } from '../../support/wait-for-behavior';
 
 Then('the {string} should be displayed',
-    async function(elementKey: ElementKey) {
+    async function (elementKey: ElementKey) {
         const {
             screen: { page },
             globalVariables,
             globalConfig,
         } = this;
 
-        console.log(`the ${elementKey} should be displayed`)
-
         const elementIdentifier = getElementLocator(page, elementKey, globalVariables, globalConfig);
-
-        await waitFor(async () => {
+        const executionResult = await waitFor(async () => {
             const isElementVisible = (await page.$(elementIdentifier)) != null;
             return isElementVisible;
         });
+
+        if(executionResult == false){
+           throw new Error(`Element NOT FOUND after 10 attempts of 1000ms. 
+        PageObject      = ${globalVariables.currentScreen.toUpperCase()}.
+        Element Name    = "${elementKey}".
+        Element Locator = "${elementIdentifier}".`)
+        }
+   
     }
 )

@@ -12,12 +12,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 (0, _cucumber.Then)('the {string} should contain the text {string}', /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(elementKey, expectedElementText) {
-    var page, globalVariables, globalConfig, elementIdentifier;
+    var page, globalVariables, globalConfig, elementIdentifier, executionResult;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            page = this.screen.page, globalVariables = this.globalVariables, globalConfig = this.globalConfig;
+            page = this.screen.page, globalVariables = this.globalVariables, globalConfig = this.globalConfig; //console.log(`The ${elementKey} should contains the text ${expectedElementText}....`);
+
             elementIdentifier = (0, _webElementHelper.getElementLocator)(page, elementKey, globalVariables, globalConfig);
             _context2.next = 4;
             return (0, _waitForBehavior.waitFor)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -42,6 +43,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             })));
 
           case 4:
+            executionResult = _context2.sent;
+
+            if (!(executionResult == false)) {
+              _context2.next = 13;
+              break;
+            }
+
+            _context2.t0 = Error;
+            _context2.t1 = " \n            Step    = The ".concat(elementKey, " should contains the text \"").concat(expectedElementText, "\".\n            Page    = ").concat(globalVariables.currentScreen.toUpperCase(), ".\n            Element = \"").concat(elementIdentifier, "\".\n            Expeccted Text = \"").concat(expectedElementText, "\".\n            Actual Text    = \"");
+            _context2.next = 10;
+            return page.textContent(elementIdentifier);
+
+          case 10:
+            _context2.t2 = _context2.sent;
+            _context2.t3 = _context2.t1.concat.call(_context2.t1, _context2.t2, "\".");
+            throw new _context2.t0(_context2.t3);
+
+          case 13:
           case "end":
             return _context2.stop();
         }

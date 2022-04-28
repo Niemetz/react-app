@@ -12,15 +12,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 (0, _cucumber.Then)('the {string} should be displayed', /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(elementKey) {
-    var page, globalVariables, globalConfig, elementIdentifier;
+    var page, globalVariables, globalConfig, elementIdentifier, executionResult;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             page = this.screen.page, globalVariables = this.globalVariables, globalConfig = this.globalConfig;
-            console.log("the ".concat(elementKey, " should be displayed"));
             elementIdentifier = (0, _webElementHelper.getElementLocator)(page, elementKey, globalVariables, globalConfig);
-            _context2.next = 5;
+            _context2.next = 4;
             return (0, _waitForBehavior.waitFor)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
               var isElementVisible;
               return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -43,7 +42,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               }, _callee);
             })));
 
-          case 5:
+          case 4:
+            executionResult = _context2.sent;
+
+            if (!(executionResult == false)) {
+              _context2.next = 7;
+              break;
+            }
+
+            throw new Error("Element NOT FOUND after 10 attempts of 1000ms. \n        PageObject      = ".concat(globalVariables.currentScreen.toUpperCase(), ".\n        Element Name    = \"").concat(elementKey, "\".\n        Element Locator = \"").concat(elementIdentifier, "\"."));
+
+          case 7:
           case "end":
             return _context2.stop();
         }

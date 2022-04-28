@@ -17,7 +17,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           case 0:
             page = this.screen.page, globalVariables = this.globalVariables, globalConfig = this.globalConfig;
             console.log("I am on the ".concat(pageId, " page"));
-            globalVariables.currentScreen = pageId;
+            globalVariables.currentScreen = pageId; //NEW, set the current page using the globalVariables.currentScreen
+
             _context.next = 5;
             return (0, _navigationBehavior.navigateToPage)(page, pageId, globalConfig);
 

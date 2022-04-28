@@ -11,13 +11,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var waitFor = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(predicate, options) {
-    var _ref2, _ref2$timeout, timeout, _ref2$wait, wait, sleep, startDate, result;
+    var _ref2, _ref2$timeout, timeout, _ref2$wait, wait, sleep, startDate, counter, result, _result;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _ref2 = options || {}, _ref2$timeout = _ref2.timeout, timeout = _ref2$timeout === void 0 ? 10000 : _ref2$timeout, _ref2$wait = _ref2.wait, wait = _ref2$wait === void 0 ? 2000 : _ref2$wait;
+            _ref2 = options || {}, _ref2$timeout = _ref2.timeout, timeout = _ref2$timeout === void 0 ? 10000 : _ref2$timeout, _ref2$wait = _ref2.wait, wait = _ref2$wait === void 0 ? 1000 : _ref2$wait;
 
             sleep = function sleep(ms) {
               return new Promise(function (resolve) {
@@ -26,38 +26,45 @@ var waitFor = /*#__PURE__*/function () {
             };
 
             startDate = new Date();
-
-          case 3:
-            if (!(new Date().getTime() - startDate.getTime() < timeout)) {
-              _context.next = 13;
-              break;
-            }
-
+            counter = 0;
             _context.next = 6;
             return predicate();
 
           case 6:
             result = _context.sent;
 
-            if (!result) {
-              _context.next = 9;
+          case 7:
+            if (!(new Date().getTime() - startDate.getTime() < timeout)) {
+              _context.next = 18;
               break;
             }
 
-            return _context.abrupt("return", result);
+            _context.next = 10;
+            return predicate();
 
-          case 9:
-            _context.next = 11;
-            return sleep(wait);
+          case 10:
+            _result = _context.sent;
 
-          case 11:
-            _context.next = 3;
-            break;
+            if (!_result) {
+              _context.next = 13;
+              break;
+            }
+
+            return _context.abrupt("return", _result);
 
           case 13:
-            throw new Error("Wait time of ".concat(timeout, "ms exceeded"));
+            _context.next = 15;
+            return sleep(wait);
 
-          case 14:
+          case 15:
+            console.log(">> ATTEMPT(".concat(++counter, "): Element NOT FOUND in the current DOM. Will try again after ").concat(wait, "ms"));
+            _context.next = 7;
+            break;
+
+          case 18:
+            return _context.abrupt("return", result);
+
+          case 19:
           case "end":
             return _context.stop();
         }
