@@ -1,7 +1,7 @@
 import { Then } from '@cucumber/cucumber'
 import { ElementKey } from '../../env/global';
-import { getElementLocator } from "../../support/web-element-helper";
-import { waitFor } from '../../support/wait-for-behavior';
+import { getElementLocator } from "../../support/actions/web-element-helper";
+import { waitFor } from '../../support/actions/wait-for-behavior';
 
 Then('the {string} should contain the text {string}',
     async function(elementKey: ElementKey, expectedElementText: string) {

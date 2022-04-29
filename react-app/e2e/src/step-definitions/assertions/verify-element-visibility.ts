@@ -1,8 +1,8 @@
 import { Then } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 import { ElementKey } from '../../env/global';
-import { getElementLocator } from '../../support/web-element-helper';
-import { waitFor } from '../../support/wait-for-behavior';
+import { getElementLocator } from '../../support/actions/web-element-helper';
+import { waitFor } from '../../support/actions/wait-for-behavior';
 
 Then('the {string} should be displayed',
     async function (elementKey: ElementKey) {

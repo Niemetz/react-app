@@ -2,9 +2,9 @@
 
 var _cucumber = require("@cucumber/cucumber");
 
-var _webElementHelper = require("../../support/web-element-helper");
+var _webElementHelper = require("../../support/actions/web-element-helper");
 
-var _waitForBehavior = require("../../support/wait-for-behavior");
+var _waitForBehavior = require("../../support/actions/wait-for-behavior");
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
