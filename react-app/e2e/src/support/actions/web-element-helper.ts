@@ -1,22 +1,18 @@
-
-// NEW, this a whole new file.
 import { Page } from 'playwright';
-import {ElementKey, ElementLocator, GlobalConfig, GlobalVariables} from '../../env/global';
+import {ElementKey, ElementLocator, GlobalConfig} from '../../env/global';
+import { getCurrentPageId } from './navigation-behavior';
 
 export const getElementLocator = (
-    page: Page,
     elementKey: ElementKey,
-    globalVariables: GlobalVariables,
+    page: Page,
     globalConfig: GlobalConfig,
 ): ElementLocator => {
+    const currentPage = getCurrentPageId(page, globalConfig); // New, lecture #37
     const { pageElementMappings } = globalConfig;
-    const currentPage = globalVariables.currentScreen;
-    const elementIdentifier = pageElementMappings[currentPage]?.[elementKey] || pageElementMappings.common?.[elementKey];
 
-    if( elementIdentifier == null) {
-       throw new Error(`** The element name = "${elementKey}" specified by Gherkin DOES NOT exist in the "${globalVariables.currentScreen}" pageobject!`);
+    const elementIdentifier = pageElementMappings[currentPage]?.[elementKey] || pageElementMappings.common?.[elementKey];
+    if (elementIdentifier) return elementIdentifier;
+    else {
+        throw new Error(`** The Gherkin element name = "${elementKey}" DOES NOT EXIST in the pageobject "${currentPage}" !`);
     }
-    else
-       //return pageElementMappings[currentPage]?.[elementKey] || pageElementMappings.common?.[elementKey];
-       return elementIdentifier;
 };

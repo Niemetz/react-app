@@ -7,7 +7,7 @@ import playwright, {
 } from "playwright";
 import { env } from '../../env/parseEnv'
 import { World, IWorldOptions, setWorldConstructor} from "@cucumber/cucumber";
-import { GlobalConfig, GlobalVariables } from '../../env/global';  //NEW, "GlobalVariables"
+import { GlobalConfig} from '../../env/global';
 
 export type Screen = {
     browser: Browser;
@@ -19,11 +19,11 @@ export class ScenarioWorld extends World {
     constructor(options: IWorldOptions) {
         super(options)
         this.globalConfig = options.parameters as GlobalConfig;
-        this.globalVariables = { currentScreen: ""}; //NEW, current page
+      
     }
 
     globalConfig: GlobalConfig;
-    globalVariables: GlobalVariables; //NEW
+
     screen!: Screen;
 
     async init(contextOptions?: BrowserContextOptions): Promise<Screen> {
@@ -32,6 +32,7 @@ export class ScenarioWorld extends World {
         await this.screen?.browser?.close()
         const browser = await this.newBrowser();
         const context = await browser.newContext(contextOptions)
+        //const context = await browser.newContext({viewport: {width:1750, height:830}})
         const page = await context.newPage();
         this.screen = { browser, context, page };
         return this.screen
@@ -46,6 +47,7 @@ export class ScenarioWorld extends World {
             headless: process.env.HEADLESS !== 'false',
             channel: "chrome",
             args: ['--disable-web-security', '--disable-features=IsolateOrigins, site-per-process'],
+            devtools: process.env.DEVTOOLS !== 'false',
         })
         return browser;
     }

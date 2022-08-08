@@ -17,15 +17,18 @@ Before(async function (this: ScenarioWorld, scenario) {
     return ready
 });
 
+
+
 After(async function(this: ScenarioWorld, scenario) {
     const {
         screen: { page, browser }
     } = this;
 
+
     const scenarioStatus = scenario.result?.status;
 
     if (scenarioStatus === 'FAILED') {
-        const screenshot = await page.screenshot({
+        const screenshot = await global.page.screenshot({
             path: `${env('SCREENSHOT_PATH')}${scenario.pickle.name}.png`
         });
         await this.attach(screenshot, 'image/png')
@@ -34,4 +37,3 @@ After(async function(this: ScenarioWorld, scenario) {
     await browser.close();
     return browser;
 });
-
